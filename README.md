@@ -7,6 +7,16 @@
 
  - https://byui-cse.github.io/wdd330-ww-course/week01/team.html
 
+ - Github Repo: 
+ https://github.com/christian-chukwu/Team-13-wdd330
+ - Render Site: 
+ https://team-13-wdd330.onrender.com
+
+### Team Members
+- Emmanuel Onukwue
+- Christian Chukwu
+- Carlos Felipe Rojas
+
 ### Prerequisites
 
 - You must have Node installed to run the following commands.
