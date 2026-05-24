@@ -52,3 +52,4 @@ function removeCartItem(id) {
 }
 
 renderCartContents();
+//discount
