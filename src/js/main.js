@@ -13,5 +13,4 @@ async function initProductList() {
   productList.init();
 }
 
-
 initProductList();
