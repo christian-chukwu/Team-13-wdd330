@@ -276,19 +276,24 @@ footer {
   padding: 1em;
 }
 
-/* these styles are for the discount badges */
-
+/* Styles for discounts */
 .discount-badge {
-  font-size: 0.8rem;
-  font-weight: bold;
-  padding: 0.3rem 0.5rem;
-  border-radius: 4px;
   display: inline-block;
+  padding: 0.35rem 0.6rem;
+
+  font-size: 0.75rem;
+  font-weight: bold;
+
+  border-radius: 999px;
+
+  background-color: #d62828;
+  color: white;
+
   margin-bottom: 0.5rem;
 }
 
 .original-price {
+  font-size: 0.9rem;
   text-decoration: line-through;
   opacity: 0.7;
-  font-size: 0.9rem;
 }
