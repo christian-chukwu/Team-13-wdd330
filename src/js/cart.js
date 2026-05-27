@@ -1,16 +1,11 @@
-import {
-  loadHeaderFooter,
-  getLocalStorage,
-  setLocalStorage,
-} from "./utils.mjs";
-import ShoppingCart from './ShoppingCart.mjs';
+import { loadHeaderFooter } from "./utils.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
 
 loadHeaderFooter();
 
-const cartElement = document.querySelector('.product-list');
+const cartElement = document.querySelector(".product-list");
 const cart = new ShoppingCart(cartElement);
 cart.init();
-
 
 /*
 function renderCartContents() {
