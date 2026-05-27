@@ -1,4 +1,4 @@
-import { getParam, loadHeaderFooter } from "./utils.mjs";
+import { getParam, loadHeaderFooter, setLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
@@ -7,24 +7,38 @@ loadHeaderFooter();
 const dataSource = new ProductData("tents");
 const productId = getParam("product");
 
-//console.log(productId);
-//console.log(dataSource.findProductById(productId));
-
 const product = new ProductDetails(productId, dataSource);
 product.init();
 
-/*function addProductToCart(product) {
-  setLocalStorage("so-cart", product);
-}*/
-// individual w01 - add product to cart
-/*
-Imported getLocalStorage and setLocalStorage functions from utils.mjs. 
-Created addProductToCart function that retrieves the current cart from local storage, adds the new product to it, and then saves it back to local storage. Implemented addToCartHandler function that fetches the product details using its ID and calls addProductToCart to update the cart. Finally, added an event listener to the "Add to Cart" button to trigger the handler when clicked.
-*/
-/*
+// Modified addProductToCart function with duplicate checking
 function addProductToCart(product) {
+  // Get existing cart or initialize empty array
   let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
-  cart.push(product);
+  
+  // Check if product already exists in cart
+  const existingItem = cart.find(item => item.Id === product.Id);
+  
+  if (existingItem) {
+    // If exists, increment quantity
+    existingItem.quantity = (existingItem.quantity || 1) + 1;
+    console.log(`Increased ${product.Name} quantity to ${existingItem.quantity}`);
+    
+    // Optional: Show user feedback
+    alert(`${product.Name} quantity updated to ${existingItem.quantity}`);
+  } else {
+    // If new item, add it with quantity 1
+    const newItem = {
+      ...product,
+      quantity: 1
+    };
+    cart.push(newItem);
+    console.log(`Added ${product.Name} to cart`);
+    
+    // Optional: Show user feedback
+    alert(`${product.Name} added to cart!`);
+  }
+  
+  // Save updated cart back to localStorage
   setLocalStorage("so-cart", cart);
 }
 
@@ -38,4 +52,3 @@ async function addToCartHandler(e) {
 document
   .getElementById("addToCart")
   .addEventListener("click", addToCartHandler);
-*/
