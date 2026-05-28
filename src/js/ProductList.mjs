@@ -1,12 +1,42 @@
-import { renderListWithTemplate } from './utils.mjs';
+import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
+  const image =
+    product?.Images?.PrimaryMedium ||
+    product?.Image ||
+    product?.image ||
+    "/images/nophoto.png";
+  const brand = product?.Brand?.Name || "";
+  const name = product?.NameWithoutBrand || "Unnamed product";
+
+  const finalPrice = product?.FinalPrice ?? 0;
+  const retailPrice = product?.SuggestedRetailPrice ?? finalPrice;
+
+  const isDiscounted = retailPrice > finalPrice;
+
+  const discountPercent = isDiscounted
+    ? Math.round(((retailPrice - finalPrice) / retailPrice) * 100)
+    : 0;
+
   return `<li class="product-card">
-    <a href="product_pages/?product=${product.Id}">
-      <img src="${product.Image}" alt="Image of ${product.Name} ">
-      <h2 class="card__brand">${product.Brand.Name}</h2>
-      <h3 class="card__name">${product.NameWithoutBrand}</h3>
-      <p class="product-card__price">$${product.ListPrice}</p>
+    <a href="/product_pages/index.html?product=${product.Id}">
+
+      ${
+        isDiscounted
+          ? `<p class="discount-badge">${discountPercent}% OFF</p>`
+          : ""
+      }
+
+      <img src="${image}" alt="Image of ${name}">
+
+      <h2 class="card__brand">${brand}</h2>
+
+      <h3 class="card__name">${name}</h3>
+
+      <p class="product-card__price">$${finalPrice}</p>
+
+      ${isDiscounted ? `<p class="original-price">$${retailPrice}</p>` : ""}
+
     </a>
   </li>`;
 }
@@ -24,10 +54,6 @@ export default class ProductList {
   }
 
   renderList(list) {
-    return renderListWithTemplate(
-      productCardTemplate,
-      this.listElement,
-      list,
-    );
+    return renderListWithTemplate(productCardTemplate, this.listElement, list);
   }
 }
