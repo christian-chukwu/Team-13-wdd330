@@ -13,8 +13,6 @@ const productId = getParam("product");
 const product = new ProductDetails(productId, dataSource);
 product.init();
 
-
-
 /*function addProductToCart(product) {
   setLocalStorage("so-cart", product);
 }*/
