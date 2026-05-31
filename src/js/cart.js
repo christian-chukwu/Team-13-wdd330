@@ -4,8 +4,14 @@ import ShoppingCart from "./ShoppingCart.mjs";
 loadHeaderFooter();
 
 const cartElement = document.querySelector(".product-list");
-const cart = new ShoppingCart(cartElement);
-cart.init();
+
+if (cartElement) {
+  const shoppingCart = new ShoppingCart(cartElement); // Renamed to avoid confusion
+  shoppingCart.init();
+} else {
+  // eslint-disable-next-line no-console
+  console.error("Cart element not found");
+}
 
 /*
 function renderCartContents() {

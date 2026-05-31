@@ -1,41 +1,44 @@
-import { getParam, loadHeaderFooter } from "./utils.mjs";
+import { getParam, loadHeaderFooter, setLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
 loadHeaderFooter();
 
-const dataSource = new ProductData("tents");
+const dataSource = new ProductData();
 const productId = getParam("product");
-
-//console.log(productId);
-//console.log(dataSource.findProductById(productId));
-
 const product = new ProductDetails(productId, dataSource);
 product.init();
 
-/*function addProductToCart(product) {
-  setLocalStorage("so-cart", product);
-}*/
-// individual w01 - add product to cart
-/*
-Imported getLocalStorage and setLocalStorage functions from utils.mjs. 
-Created addProductToCart function that retrieves the current cart from local storage, adds the new product to it, and then saves it back to local storage. Implemented addToCartHandler function that fetches the product details using its ID and calls addProductToCart to update the cart. Finally, added an event listener to the "Add to Cart" button to trigger the handler when clicked.
-*/
-/*
-function addProductToCart(product) {
+function addProductToCart(productItem) {
   let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
-  cart.push(product);
+  const existingItemIndex = cart.findIndex(item => item.Id === productItem.Id);
+  
+  if (existingItemIndex !== -1) {
+    const currentQty = cart[existingItemIndex].quantity || 1;
+    cart[existingItemIndex].quantity = currentQty + 1;
+    alert(`${productItem.Name} quantity updated to ${cart[existingItemIndex].quantity}`);
+  } else {
+    cart.push({
+      ...productItem,
+      quantity: 1
+    });
+    alert(`${productItem.Name} added to cart!`);
+  }
+  
   setLocalStorage("so-cart", cart);
+  window.dispatchEvent(new CustomEvent("cart-updated"));
 }
 
-// add to cart button event handler
 async function addToCartHandler(e) {
-  const product = await dataSource.findProductById(e.target.dataset.id);
-  addProductToCart(product);
+  const productItem = await dataSource.findProductById(e.target.dataset.id);
+  if (productItem) {
+    addProductToCart(productItem);
+  }
 }
 
-// add listener to Add to Cart button
-document
-  .getElementById("addToCart")
-  .addEventListener("click", addToCartHandler);
-*/
+const addToCartButton = document.getElementById("addToCart");
+if (addToCartButton) {
+  const newButton = addToCartButton.cloneNode(true);
+  addToCartButton.parentNode.replaceChild(newButton, addToCartButton);
+  newButton.addEventListener("click", addToCartHandler);
+}

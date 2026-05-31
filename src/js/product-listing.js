@@ -1,16 +1,22 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, getParam } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 
+// Load header and footer
 loadHeaderFooter();
 
-const productData = new ProductData("tents");
+// Get the category from the URL parameter
+const category = getParam("category");
+
+// If no category is specified, default to "tents"
+const activeCategory = category || "tents";
+
+// Create data source (no category parameter needed anymore)
+const dataSource = new ProductData();
+
+// Get the container element
 const listElement = document.querySelector(".product-list");
 
-async function initProductList() {
-  await productData.getData(); // Ensure data is loaded
-  const productList = new ProductList("Tents", productData, listElement);
-  productList.init();
-}
-
-initProductList();
+// Create and initialize the product list
+const productList = new ProductList(activeCategory, dataSource, listElement);
+productList.init();
