@@ -41,17 +41,6 @@ function productCardTemplate(product) {
   </li>`;
 }
 
-renderTitle() {
-  const titleElement = document.querySelector(".products__title");
-  if (titleElement) {
-    const formattedCategory = this.category
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-    titleElement.textContent = `Top Products: ${formattedCategory}`;
-  }
-}
-
 export default class ProductList {
   constructor(category, dataSource, listElement) {
     this.category = category;
@@ -59,15 +48,12 @@ export default class ProductList {
     this.listElement = listElement;
   }
 
-async init() {
-  const productList = await this.dataSource.getData(this.category);
-  this.renderTitle();
-  this.renderProductList(productList);
-}
+  async init() {
+    const list = await this.dataSource.getData();
+    this.renderList(list);
+  }
 
   renderList(list) {
     return renderListWithTemplate(productCardTemplate, this.listElement, list);
   }
 }
-
-
