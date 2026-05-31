@@ -20,14 +20,15 @@ function addProductToCart(productItem) {
     // Update existing item quantity
     const currentQty = cart[existingItemIndex].quantity || 1;
     cart[existingItemIndex].quantity = currentQty + 1;
-    alert("${productItem.Name} quantity updated to ${cart[existingItemIndex].quantity}");
+    alert(`${productItem.Name} quantity updated to ${cart[existingItemIndex].quantity}`);
+   // alert("${productItem.Name} quantity updated to ${cart[existingItemIndex].quantity}");
   } else {
     // Add new item
     cart.push({
       ...productItem,
       quantity: 1
     });
-    alert("${productItem.Name} added to cart!");
+   alert("${productItem.Name} added to cart!");
   }
   
   // Save to localStorage
