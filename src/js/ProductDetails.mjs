@@ -1,7 +1,6 @@
 import {
   getLocalStorage,
   setLocalStorage,
-  alertMessage,
   updateCartCount
 } from "./utils.mjs";
 
@@ -23,45 +22,35 @@ export default class ProductDetails {
   }
 
   addProductToCart() {
-  let cartItems = getLocalStorage("so-cart") || [];
+    let cartItems = getLocalStorage("so-cart") || [];
 
-  const existingIndex = cartItems.findIndex(
-    item => item.Id === this.product.Id
-  );
+    const existingIndex = cartItems.findIndex(
+      item => item.Id === this.product.Id
+    );
 
-  if (existingIndex !== -1) {
-    // Update quantity for existing item
-    const currentQty = cartItems[existingIndex].quantity || 1;
-    const newQuantity = currentQty + 1;
-    cartItems[existingIndex].quantity = newQuantity;
-    
-    setLocalStorage("so-cart", cartItems);
-    
-    // Specific alert for quantity update
-    alertMessage(
-      `${this.product.Name} quantity updated to ${newQuantity}!`,
-      true,
-      3000,
-      "info"  // Using "info" type to distinguish from success messages
-    );
-  } else {
-    // Add new item
-    this.product.quantity = 1;
-    cartItems.push(this.product);
-    
-    setLocalStorage("so-cart", cartItems);
-    
-    // Alert for new item
-    alertMessage(
-      `✅ ${this.product.Name} added to cart successfully!`,
-      true,
-      3000,
-      "success"
-    );
+    if (existingIndex !== -1) {
+      // Update quantity for existing item
+      const currentQty = cartItems[existingIndex].quantity || 1;
+      const newQuantity = currentQty + 1;
+      cartItems[existingIndex].quantity = newQuantity;
+      
+      setLocalStorage("so-cart", cartItems);
+      
+      // Native browser alert for quantity update
+      alert(`${this.product.Name} quantity updated to ${newQuantity}`);
+    } else {
+      // Add new item
+      this.product.quantity = 1;
+      cartItems.push(this.product);
+      
+      setLocalStorage("so-cart", cartItems);
+      
+      // Native browser alert for new item
+      alert(`${this.product.Name} added to cart!`);
+    }
+
+    updateCartCount();
   }
-
-  updateCartCount();
-}
 
   renderProductDetails() {
     productDetailsTemplate(this.product);
