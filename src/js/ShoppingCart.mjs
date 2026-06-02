@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage, renderListWithTemplate } from './utils.mjs';
+import { getLocalStorage, setLocalStorage, renderListWithTemplate, updateCartCount } from './utils.mjs';
 
 function cartItemTemplate(item) {
   const quantity = item.quantity || 1;
@@ -98,6 +98,7 @@ export default class ShoppingCart {
     setLocalStorage('so-cart', cart);
     // Re-render the cart
     this.renderCart();
+    updateCartCount();
   }
 
   updateCartTotal() {
