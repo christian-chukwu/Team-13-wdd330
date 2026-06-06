@@ -1,14 +1,11 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Sleep Outside | Checkout</title>
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/checkout.js" type="module"></script>
   </head>
 
@@ -16,9 +13,53 @@
     <header class="divider" id="main-header"></header>
 
     <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
+      <h2>Checkout</h2>
+
+      <form id="checkoutForm">
+        <h3>Shipping Info</h3>
+
+        <label
+          >First Name
+          <input type="text" name="fname" required minlength="2" />
+        </label>
+
+        <label
+          >Last Name
+          <input type="text" name="lname" required minlength="2" />
+        </label>
+
+        <label
+          >Address
+          <input type="text" name="address" required />
+        </label>
+
+        <label
+          >City
+          <input type="text" name="city" required />
+        </label>
+
+        <label
+          >State
+          <input type="text" name="state" required maxlength="2" />
+        </label>
+
+        <label
+          >Zip
+          <input type="text" name="zip" required pattern="[0-9]{5}" />
+        </label>
+
+        <label
+          >Email
+          <input type="email" name="email" required />
+        </label>
+
+        <label
+          >Phone
+          <input type="tel" name="phone" required />
+        </label>
+
+        <button id="checkoutSubmit">Place Order</button>
+      </form>
     </main>
 
     <footer id="main-footer"></footer>
